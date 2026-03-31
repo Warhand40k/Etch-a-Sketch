@@ -1,4 +1,12 @@
 const createGrids = (squares_per_side = 16) => {
+
+    function randomRGB() {
+        const red = String(Math.random() * 256);
+        const green = String(Math.random() * 256);
+        const blue = String(Math.random() * 256);
+        return `rgb(${red}, ${green}, ${blue})`;
+    }
+
     const container = document.querySelector('#container');
     for(let i = 0; i < squares_per_side; i++) {
         const row = document.createElement('div');
@@ -12,7 +20,7 @@ const createGrids = (squares_per_side = 16) => {
     }
     container.addEventListener('mouseover', (e) => {
         if (!(e.target.id === 'container')) {
-            e.target.classList.add('hover-effect');
+            e.target.style.backgroundColor = randomRGB();
         }
     });
 }
