@@ -1,9 +1,9 @@
 const createGrids = (squares_per_side = 16) => {
 
     function randomRGB() {
-        const red = String(Math.random() * 256);
-        const green = String(Math.random() * 256);
-        const blue = String(Math.random() * 256);
+        const red = String(Math.floor(Math.random() * 256));
+        const green = String(Math.floor(Math.random() * 256));
+        const blue = String(Math.floor(Math.random() * 256));
         return `rgb(${red}, ${green}, ${blue})`;
     }
 
