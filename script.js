@@ -1,11 +1,4 @@
-const createGrids = (squares_per_side = 16) => {
-
-    function randomRGB() {
-        const red = String(Math.floor(Math.random() * 256));
-        const green = String(Math.floor(Math.random() * 256));
-        const blue = String(Math.floor(Math.random() * 256));
-        return `rgb(${red}, ${green}, ${blue})`;
-    }
+const createGrid = (squares_per_side = 16) => {
 
     const container = document.querySelector('#container');
     for(let i = 0; i < squares_per_side; i++) {
@@ -18,40 +11,52 @@ const createGrids = (squares_per_side = 16) => {
         }
         container.appendChild(row);
     }
+}
 
-    container.addEventListener('mouseover', (e) => {
-        if (!(e.target.id === 'container')) {
-            // e.target.style.backgroundColor = randomRGB();
-            if (!e.target.style.opacity) {
-                e.target.style.opacity = 0.1;
-            } else {
-                let currentOpacity = +e.target.style.opacity;
-                if (currentOpacity <= 1) {
-                    currentOpacity += 0.1;
-                    e.target.style.opacity = String(currentOpacity);
-                }
-            }
+const progressiveDarkening = (e) => {
+    if (!e.target.style.opacity) {
+        e.target.style.opacity = 0.1;
+    } else {
+        let currentOpacity = +e.target.style.opacity;
+        if (currentOpacity < 1) {
+            currentOpacity += 0.1;
+            e.target.style.opacity = String(currentOpacity);
         }
-    });
+    } 
+}
 
-    // document.querySelector('#toggle-drawing-mode').addEventListener((e) => {
-    //     if (e.target.textContent === 'Randomize Colors') {
+const randomRGB = (e) => {
+    const red = String(Math.floor(Math.random() * 256));
+    const green = String(Math.floor(Math.random() * 256));
+    const blue = String(Math.floor(Math.random() * 256));
+    e.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+}
 
-    //     }
-    // });
+document.querySelector("#container").addEventListener('mouseover', (e) => {
+    if (!(e.target.id === 'container')) {
+        randomRGB(e);
+        progressiveDarkening(e);
+    }
+});
+
+const removeGrid = () => {
+    const container = document.querySelector('#container');
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 }
 
 document.querySelector("#new-grid-btn").addEventListener('click', () => {
     const squares_per_side = +prompt("Enter number of squares per side", "16");
-    if (squares_per_side <= 100){
-        const container = document.querySelector('#container');
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
+    if (squares_per_side || squares_per_side === 0){
+        removeGrid();
+        if (squares_per_side < 1 || squares_per_side > 100) {
+            alert("Choose a number between 1 to 100");
+            createGrid();
+        } else {
+            createGrid(squares_per_side);
         }
-        createGrids(squares_per_side);
-    } else {
-        alert("Too much squares!");
     }
-})
+});
 
-createGrids();
+createGrid();
