@@ -46,7 +46,7 @@ const removeGrid = () => {
     }
 }
 
-document.querySelector("#new-grid-btn").addEventListener('click', () => {
+document.querySelector("header div button").addEventListener('click', () => {
     const squares_per_side = +prompt("Enter number of squares per side", "16");
     if (squares_per_side || squares_per_side === 0){
         removeGrid();
