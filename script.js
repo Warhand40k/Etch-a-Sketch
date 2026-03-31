@@ -18,14 +18,30 @@ const createGrids = (squares_per_side = 16) => {
         }
         container.appendChild(row);
     }
+
     container.addEventListener('mouseover', (e) => {
         if (!(e.target.id === 'container')) {
-            e.target.style.backgroundColor = randomRGB();
+            // e.target.style.backgroundColor = randomRGB();
+            if (!e.target.style.opacity) {
+                e.target.style.opacity = 0.1;
+            } else {
+                let currentOpacity = +e.target.style.opacity;
+                if (currentOpacity <= 1) {
+                    currentOpacity += 0.1;
+                    e.target.style.opacity = String(currentOpacity);
+                }
+            }
         }
     });
+
+    // document.querySelector('#toggle-drawing-mode').addEventListener((e) => {
+    //     if (e.target.textContent === 'Randomize Colors') {
+
+    //     }
+    // });
 }
 
-document.querySelector("header button").addEventListener('click', () => {
+document.querySelector("#new-grid-btn").addEventListener('click', () => {
     const squares_per_side = +prompt("Enter number of squares per side", "16");
     if (squares_per_side <= 100){
         const container = document.querySelector('#container');
